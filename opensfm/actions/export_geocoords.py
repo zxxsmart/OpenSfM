@@ -12,6 +12,27 @@ from opensfm.dataset import DataSet, UndistortedDataSet
 
 logger: logging.Logger = logging.getLogger(__name__)
 
+def _transform(point, reference, projection):
+    """Backward-compatible helper expected by ODM.
+
+    Args:
+        point: iterable like (x, y, z) in the reconstruction/reference frame
+        reference: OpenSfM reference object
+        projection: pyproj transformer/projection object used by OpenSfM geo helpers
+
+    Returns:
+        Transformed geographic coordinates as a list [x, y, z].
+    """
+    x, y, *rest = point
+    z = rest[0] if rest else 0.0
+
+    # local/topocentric -> lat, lon, alt in OpenSfM reference
+    lat, lon, alt = reference.to_lla(x, y, z)
+
+    # lat/lon/alt -> requested projected CRS
+    tx, ty, tz = projection.transform(lat, lon, alt)
+
+    return [tx, ty, tz]
 
 def run_dataset(
     data: DataSet,
