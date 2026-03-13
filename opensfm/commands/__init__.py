@@ -19,7 +19,7 @@ from . import (
     export_ply,
     export_pmvs,
     export_report,
-    export_rerun,
+    # export_rerun,
     export_visualsfm,
     extend_reconstruction,
     extract_metadata,
@@ -32,6 +32,10 @@ from . import (
 )
 from .command_runner import command_runner
 
+try:
+    from . import export_rerun
+except ImportError:
+    export_rerun = None
 
 opensfm_commands: List[ModuleType] = [
     extract_metadata,
@@ -54,9 +58,39 @@ opensfm_commands: List[ModuleType] = [
     export_colmap,
     export_geocoords,
     export_report,
-    export_rerun,
     extend_reconstruction,
     create_submodels,
     align_submodels,
     rs_correct,
 ]
+
+if export_rerun is not None:
+    opensfm_commands.append(export_rerun)
+
+# opensfm_commands: List[ModuleType] = [
+#     extract_metadata,
+#     detect_features,
+#     match_features,
+#     create_rig,
+#     create_tracks,
+#     reconstruct,
+#     reconstruct_from_prior,
+#     bundle,
+#     mesh,
+#     undistort,
+#     compute_depthmaps,
+#     compute_statistics,
+#     export_ply,
+#     export_openmvs,
+#     export_visualsfm,
+#     export_pmvs,
+#     export_bundler,
+#     export_colmap,
+#     export_geocoords,
+#     export_report,
+#     export_rerun,
+#     extend_reconstruction,
+#     create_submodels,
+#     align_submodels,
+#     rs_correct,
+# ]
