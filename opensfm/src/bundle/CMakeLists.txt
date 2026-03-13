@@ -17,7 +17,7 @@ set(BUNDLE_FILES
 add_library(bundle ${BUNDLE_FILES})
 target_link_libraries(bundle
   PRIVATE
-    ${CERES_LIBRARIES}
+    ${OPENSFM_CERES_LIBRARIES}
     ${LAPACK_LIBRARIES}
     ${SUITESPARSE_LIBRARIES}
     foundation

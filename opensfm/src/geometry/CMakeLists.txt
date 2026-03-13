@@ -22,11 +22,11 @@ add_library(geometry ${GEOMETRY_FILES})
 # target_link_libraries(geometry
 #     PRIVATE
 #     foundation
-#     ${CERES_LIBRARIES}
+#     ${OPENSFM_CERES_LIBRARIES}
 #     )
 target_link_libraries(geometry
     PUBLIC
-    ${CERES_LIBRARIES}
+    ${OPENSFM_CERES_LIBRARIES}
     PRIVATE
     foundation
     )

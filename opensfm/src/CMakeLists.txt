@@ -111,10 +111,17 @@ endif()
 # else()
 #     set(CERES_LIBRARIES ceres)
 # endif()
+# Prefer modern imported target when available.
+# Otherwise, keep the value provided by find_package(Ceres)
+# / FindCeres.cmake instead of forcing bare "-lceres".
 if(TARGET Ceres::ceres)
-    set(CERES_LIBRARIES Ceres::ceres)
+    set(OPENSFM_CERES_LIBRARIES Ceres::ceres)
+elseif(DEFINED CERES_LIBRARIES AND NOT "${OPENSFM_CERES_LIBRARIES}" STREQUAL "")
+    set(OPENSFM_CERES_LIBRARIES "${OPENSFM_CERES_LIBRARIES}")
+elseif(DEFINED CERES_LIBRARY AND NOT "${CERES_LIBRARY}" STREQUAL "")
+    set(OPENSFM_CERES_LIBRARIES "${CERES_LIBRARY}")
 else()
-    set(CERES_LIBRARIES ceres)
+    message(FATAL_ERROR "Could not determine usable Ceres library target/path")
 endif()
 
 # Only link against the OpenCV components we actually need
