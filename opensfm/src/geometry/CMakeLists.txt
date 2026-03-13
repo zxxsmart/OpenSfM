@@ -19,10 +19,16 @@ set(GEOMETRY_FILES
     src/relative_pose.cc
     )
 add_library(geometry ${GEOMETRY_FILES})
+# target_link_libraries(geometry
+#     PRIVATE
+#     foundation
+#     ${CERES_LIBRARIES}
+#     )
 target_link_libraries(geometry
+    PUBLIC
+    ${CERES_LIBRARIES}
     PRIVATE
     foundation
-    ${CERES_LIBRARIES}
     )
 target_include_directories(geometry PUBLIC ${CMAKE_SOURCE_DIR} ${CERES_INCLUDE_DIR}/ceres/internal/miniglog)
 

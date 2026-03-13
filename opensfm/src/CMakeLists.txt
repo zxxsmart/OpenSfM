@@ -105,7 +105,13 @@ endif()
 # Ceres1 exposes just ceres.
 # - if there's no such target, cmake will convert it into -lceres
 # and the linker will fail
-if(Ceres_ceres_FOUND)
+
+# if(Ceres_ceres_FOUND)
+#     set(CERES_LIBRARIES Ceres::ceres)
+# else()
+#     set(CERES_LIBRARIES ceres)
+# endif()
+if(TARGET Ceres::ceres)
     set(CERES_LIBRARIES Ceres::ceres)
 else()
     set(CERES_LIBRARIES ceres)
